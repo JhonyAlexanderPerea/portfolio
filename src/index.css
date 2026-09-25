@@ -21,9 +21,52 @@
 
 body {
   background-color: var(--color-bg);
+  background-image:
+    linear-gradient(rgba(57, 255, 106, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(57, 255, 106, 0.035) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(11, 12, 16, 0.12), rgba(11, 12, 16, 0.72));
+  background-size: 40px 40px, 40px 40px, 100% 100%;
+  background-attachment: fixed;
   color: var(--color-text);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+}
+
+.site-shell {
+  position: relative;
+  isolation: isolate;
+  overflow-x: hidden;
+  background: transparent;
+}
+
+.site-shell > :not(.ambient-background):not(.fixed) {
+  position: relative;
+  z-index: 1;
+}
+
+.ambient-background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image:
+    radial-gradient(circle at 10% 12%, rgba(57, 255, 106, 0.14), transparent 23%),
+    radial-gradient(circle at 88% 18%, rgba(124, 92, 255, 0.13), transparent 24%),
+    radial-gradient(circle at 18% 82%, rgba(124, 92, 255, 0.1), transparent 25%),
+    radial-gradient(circle at 84% 78%, rgba(57, 255, 106, 0.11), transparent 24%),
+    linear-gradient(120deg, transparent 0%, rgba(57, 255, 106, 0.035) 50%, transparent 100%);
+  background-size: 140% 140%, 160% 160%, 150% 150%, 170% 170%, 220% 220%;
+  animation: ambient-drift 18s ease-in-out infinite alternate;
+}
+
+@keyframes ambient-drift {
+  0% {
+    background-position: 0% 0%, 100% 100%, 0% 100%, 100% 0%, 0% 50%;
+  }
+  100% {
+    background-position: 25% 18%, 75% 82%, 18% 72%, 82% 28%, 100% 50%;
+  }
 }
 
 ::selection {
@@ -44,6 +87,9 @@ body {
   position: relative;
   isolation: isolate;
   overflow: hidden;
+  transform: perspective(900px) rotateX(var(--tilt-y, 0deg)) rotateY(var(--tilt-x, 0deg));
+  transition: transform 180ms ease, border-color 300ms ease;
+  will-change: transform;
 }
 .spotlight-glow {
   position: absolute;
@@ -74,6 +120,11 @@ body {
   box-shadow: 0 0 8px rgba(57, 255, 106, 0.6);
 }
 
+.back-to-top {
+  position: fixed;
+  inset: auto max(1.5rem, env(safe-area-inset-right)) max(1.5rem, env(safe-area-inset-bottom)) auto;
+}
+
 /* floating gradient orbs in hero */
 .orb {
   position: absolute;
@@ -89,5 +140,9 @@ body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+
+  .ambient-background {
+    display: none;
   }
 }

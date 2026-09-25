@@ -42,6 +42,16 @@ export const skillGroups = [
 
 
 export const projects = [
+    {
+    id: "corteza-terrestre",
+    title: "Corteza Terrestre",
+    description: "Rediseño y mejoramiento de la páǵina web de la fundación Corteza Terrestre, con el objetivo de mejorar la experiencia del usuario y la accesibilidad de la información.",
+    stack: ["React 19","Tailwind CSS 4","Vite 8","Framer Motion","Lucide React", "React Hook Form + @hookform/resolvers"],
+    repo: "https://github.com/Shuh3n/CortezaWeb.git",
+    private: true,
+    demo: "",
+    official: "https://www.cortezaterrestre.org/",
+  },
   {
     id: "elasticity-manager",
     title: "elasticity-manager (Proyecto académico)",
@@ -67,17 +77,18 @@ export const projects = [
     description: "Tienda de ropa en línea, con funcionalidades de catálogo interactivo, carrito de compras ",
     stack: ["React", "TypeScript", "Tailwind CSS", "Vite"],
     repo: "https://github.com/Shuh3n/StepUp_ecommerce",
-    demo: "",
+    demo: "https://stepupstore.vercel.app/",
     official: "",
   },
   {
-    id: "corteza-terrestre",
-    title: "Corteza Terrestre",
-    description: "Rediseño y mejoramiento de la páǵina web de la fundación Corteza Terrestre, con el objetivo de mejorar la experiencia del usuario y la accesibilidad de la información.",
-    stack: ["React 19","Tailwind CSS 4","Vite 8","Framer Motion","Lucide React", "React Hook Form + @hookform/resolvers"],
-    repo: "https://github.com/Shuh3n/CortezaWeb.git",
+    id: "viaje-app",
+    title: "El Viaje a la Cámara Interna — App",
+    description: "Aplicación web híbrida y PWA para acompañar durante 9 meses El Viaje a la Cámara Interna con diario E.P.A.R., notas libres, biblioteca de recursos con carga real de archivos y seguimiento de 22 sesiones.",
+    stack: ["React con Next.js", "Supabase", "Tailwind CSS"],
+    repo: "https://github.com/JhonyAlexanderPerea/viaje-app.git",
     private: true,
     demo: "",
-    official: "https://www.cortezaterrestre.org/",
+    official: "https://viaje-app-phi.vercel.app",
   }
+
 ];

@@ -152,9 +152,7 @@ export default function Hero() {
   }
 
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center px-6 bg-grid overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-bg via-bg/95 to-bg pointer-events-none" />
-
+    <section className="relative min-h-screen flex flex-col items-center justify-center px-6 overflow-hidden">
       {/* floating gradient orbs for depth */}
       <motion.div
         aria-hidden

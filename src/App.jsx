@@ -9,7 +9,8 @@ import BackToTop from "./components/BackToTop";
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-bg text-text">
+    <div className="site-shell min-h-screen text-text">
+      <div className="ambient-background" aria-hidden="true" />
       <ScrollProgress />
       <Nav />
       <main>
@@ -21,7 +22,7 @@ export default function App() {
       </main>
       <BackToTop />
       <footer className="py-8 text-center text-xs font-mono text-text-muted/60 border-t border-border">
-        construido con React + Tailwind — {new Date().getFullYear()}
+        construido con React + Tailwind + FramerMotion — {new Date().getFullYear()}
       </footer>
     </div>
   );

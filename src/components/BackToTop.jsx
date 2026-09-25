@@ -22,7 +22,7 @@ export default function BackToTop() {
           whileTap={{ scale: 0.94 }}
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           aria-label="Volver arriba"
-          className="fixed bottom-6 right-6 z-40 w-11 h-11 rounded-full border border-border bg-surface/90 backdrop-blur text-accent flex items-center justify-center shadow-[0_0_20px_-4px_rgba(57,255,106,0.4)] hover:border-accent transition-colors"
+          className="fixed back-to-top z-40 w-11 h-11 rounded-full border border-border bg-surface/90 backdrop-blur text-accent flex items-center justify-center shadow-[0_0_20px_-4px_rgba(57,255,106,0.4)] hover:border-accent transition-colors"
         >
           <ArrowUp size={18} />
         </motion.button>

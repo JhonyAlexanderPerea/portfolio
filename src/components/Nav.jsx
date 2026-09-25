@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { profile } from "../data/profile";
 
 const NAV = [
@@ -11,26 +11,83 @@ const NAV = [
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState("");
+  const navigationTarget = useRef(null);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    const sections = NAV.map((item) => document.getElementById(item.id)).filter(Boolean);
+
+    const updateActiveSection = () => {
+      const marker = Math.min(window.innerHeight * 0.38, 260);
+      const reachedBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 8;
+
+      if (reachedBottom && sections.length) {
+        setActive(sections[sections.length - 1].id);
+        return;
+      }
+
+      const current = sections.find((section) => {
+        const bounds = section.getBoundingClientRect();
+        return bounds.top <= marker && bounds.bottom > marker;
+      });
+
+      if (current) {
+        setActive(current.id);
+        return;
+      }
+
+      const previous = sections.reduce((activeSection, section) => {
+        return section.getBoundingClientRect().top <= marker ? section : activeSection;
+      }, null);
+
+      setActive(previous?.id ?? "");
+    };
+
+    const onScroll = () => {
+      setScrolled(window.scrollY > 24);
+
+      if (navigationTarget.current) {
+        const target = document.getElementById(navigationTarget.current);
+        const targetTop = target?.getBoundingClientRect().top ?? 0;
+
+        if (target && Math.abs(targetTop - 80) > 12) return;
+
+        setActive(navigationTarget.current);
+        navigationTarget.current = null;
+        return;
+      }
+
+      updateActiveSection();
+    };
+
+    const cancelNavigation = () => {
+      navigationTarget.current = null;
+    };
+
     window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
+    window.addEventListener("resize", updateActiveSection);
+    window.addEventListener("wheel", cancelNavigation, { passive: true });
+    window.addEventListener("touchstart", cancelNavigation, { passive: true });
+    onScroll();
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", updateActiveSection);
+      window.removeEventListener("wheel", cancelNavigation);
+      window.removeEventListener("touchstart", cancelNavigation);
+    };
   }, []);
 
-  useEffect(() => {
-    const sections = NAV.map((n) => document.getElementById(n.id)).filter(Boolean);
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) setActive(entry.target.id);
-        });
-      },
-      { rootMargin: "-45% 0px -50% 0px", threshold: 0 }
-    );
-    sections.forEach((s) => observer.observe(s));
-    return () => observer.disconnect();
-  }, []);
+  function handleNavigation(event, id) {
+    event.preventDefault();
+    const section = document.getElementById(id);
+    if (!section) return;
+
+    navigationTarget.current = id;
+    setActive(id);
+    window.scrollTo({
+      top: Math.max(section.offsetTop - 80, 0),
+      behavior: "smooth",
+    });
+  }
 
   return (
     <header
@@ -48,6 +105,7 @@ export default function Nav() {
             <li key={item.href} className="relative py-1">
               <a
                 href={item.href}
+                onClick={(event) => handleNavigation(event, item.id)}
                 className={`transition-colors ${
                   active === item.id ? "text-accent" : "hover:text-accent"
                 }`}

@@ -50,7 +50,7 @@ export default function Avatar() {
         onMouseMove={handleMove}
         onMouseLeave={handleLeave}
         style={{ rotateX: rx, rotateY: ry, transformStyle: "preserve-3d" }}
-        className="relative w-32 h-32 sm:w-40 sm:h-40 rounded-full border-2 border-border overflow-hidden bg-surface shadow-[0_0_40px_-8px_rgba(57,255,106,0.45)]"
+        className="relative w-40 h-40 sm:w-48 sm:h-48 rounded-full border-2 border-border overflow-hidden bg-surface shadow-[0_0_40px_-8px_rgba(57,255,106,0.45)]"
       >
         <img
           src={profilePhoto}
