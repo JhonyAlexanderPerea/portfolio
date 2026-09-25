@@ -1,0 +1,93 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #0B0C10;
+  --color-surface: #14151C;
+  --color-surface-hover: #1A1C26;
+  --color-border: #24262F;
+  --color-text: #E6E8EB;
+  --color-text-muted: #8B8FA3;
+  --color-accent: #39FF6A;
+  --color-accent-dim: #2BBF52;
+  --color-accent-2: #7C5CFF;
+
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --font-sans: 'Inter', system-ui, sans-serif;
+}
+
+* {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background-color: var(--color-accent);
+  color: var(--color-bg);
+}
+
+/* subtle scanline / grid texture for terminal feel */
+.bg-grid {
+  background-image:
+    linear-gradient(rgba(57, 255, 106, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(57, 255, 106, 0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Spotlight hover glow used by SpotlightCard */
+.spotlight-card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+.spotlight-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  background: radial-gradient(
+    260px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+    rgba(57, 255, 106, 0.12),
+    transparent 70%
+  );
+}
+.spotlight-card:hover .spotlight-glow {
+  opacity: 1;
+}
+
+/* scroll progress bar */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  transform-origin: 0% 50%;
+  background: linear-gradient(90deg, var(--color-accent), var(--color-accent-2));
+  z-index: 60;
+  box-shadow: 0 0 8px rgba(57, 255, 106, 0.6);
+}
+
+/* floating gradient orbs in hero */
+.orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(60px);
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
