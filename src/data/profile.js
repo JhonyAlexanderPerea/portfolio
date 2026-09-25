@@ -43,6 +43,16 @@ export const skillGroups = [
 
 export const projects = [
     {
+    id: "viaje-app",
+    title: "El Viaje a la Cámara Interna — App",
+    description: "Aplicación web híbrida y PWA para acompañar durante 9 meses El Viaje a la Cámara Interna con diario E.P.A.R., notas libres, biblioteca de recursos con carga real de archivos y seguimiento de 22 sesiones.",
+    stack: ["React con Next.js", "Supabase", "Tailwind CSS"],
+    repo: "https://github.com/JhonyAlexanderPerea/viaje-app.git",
+    private: true,
+    demo: "",
+    official: "https://viaje-app-phi.vercel.app",
+    },
+    {
     id: "corteza-terrestre",
     title: "Corteza Terrestre",
     description: "Rediseño y mejoramiento de la páǵina web de la fundación Corteza Terrestre, con el objetivo de mejorar la experiencia del usuario y la accesibilidad de la información.",
@@ -79,16 +89,7 @@ export const projects = [
     repo: "https://github.com/Shuh3n/StepUp_ecommerce",
     demo: "https://stepupstore.vercel.app/",
     official: "",
-  },
-  {
-    id: "viaje-app",
-    title: "El Viaje a la Cámara Interna — App",
-    description: "Aplicación web híbrida y PWA para acompañar durante 9 meses El Viaje a la Cámara Interna con diario E.P.A.R., notas libres, biblioteca de recursos con carga real de archivos y seguimiento de 22 sesiones.",
-    stack: ["React con Next.js", "Supabase", "Tailwind CSS"],
-    repo: "https://github.com/JhonyAlexanderPerea/viaje-app.git",
-    private: true,
-    demo: "",
-    official: "https://viaje-app-phi.vercel.app",
   }
+
 
 ];
