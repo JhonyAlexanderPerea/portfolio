@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Mail } from "lucide-react";
 import { links } from "../data/profile";
 import { GithubIcon, LinkedinIcon } from "./icons";
+import { useLanguage } from "../i18n";
 
 const CONTACT_ITEMS = [
   { key: "github", icon: GithubIcon, label: "Github", href: links.github },
@@ -10,16 +11,17 @@ const CONTACT_ITEMS = [
 ].filter((item) => item.href);
 
 export default function Contact() {
+  const { t } = useLanguage();
+
   return (
     <section id="contacto" className="py-28 px-6">
       <div className="max-w-3xl mx-auto text-center">
-        <p className="font-mono text-sm text-accent mb-3">// Contacto</p>
+        <p className="font-mono text-sm text-accent mb-3">// {t.contact}</p>
         <h2 className="text-2xl sm:text-3xl font-mono font-bold text-text mb-3">
-          ¿Hablamos?
+          {t.letsTalk}
         </h2>
         <p className="text-text-muted max-w-md mx-auto mb-10">
-          Abierto a oportunidades, colaboraciones y proyectos. Escríbeme por
-          cualquiera de estos canales.
+          {t.contactDescription}
         </p>
         <div className="flex flex-wrap items-center justify-center gap-4">
           {CONTACT_ITEMS.map(({ key, icon: Icon, label, href }, i) => (

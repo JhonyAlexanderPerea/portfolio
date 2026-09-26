@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { ExternalLink, Star, GitFork, Clock, Lock, X } from "lucide-react";
 import { GithubIcon } from "./icons";
-import { projects } from "../data/profile";
+import { useLanguage } from "../i18n";
 import SpotlightCard from "./SpotlightCard";
 
 function repoPath(url) {
@@ -15,16 +15,16 @@ function repoPath(url) {
   }
 }
 
-function timeAgo(dateStr) {
+function timeAgo(dateStr, t) {
   const diff = Date.now() - new Date(dateStr).getTime();
   const days = Math.floor(diff / 86400000);
-  if (days < 1) return "hoy";
-  if (days === 1) return "hace 1 dia";
-  if (days < 30) return `hace ${days} dias`;
+  if (days < 1) return t.project.today;
+  if (days === 1) return t.project.yesterday;
+  if (days < 30) return t.project.daysAgo(days);
   const months = Math.floor(days / 30);
-  if (months < 12) return `hace ${months} ${months === 1 ? "mes" : "meses"}`;
+  if (months < 12) return months === 1 ? t.project.monthAgo : t.project.monthsAgo(months);
   const years = Math.floor(months / 12);
-  return `hace ${years} ${years === 1 ? "año" : "años"}`;
+  return years === 1 ? t.project.yearAgo : t.project.yearsAgo(years);
 }
 
 function useGithubStats(repoUrl) {
@@ -59,6 +59,7 @@ function useGithubStats(repoUrl) {
 }
 
 function GithubStats({ repo }) {
+  const { t } = useLanguage();
   const stats = useGithubStats(repo);
 
   if (stats.status === "loading") {
@@ -78,14 +79,15 @@ function GithubStats({ repo }) {
       <span className="inline-flex items-center gap-1" title="forks">
         <GitFork size={12} className="text-accent-2" /> {stats.forks}
       </span>
-      <span className="inline-flex items-center gap-1" title="ultima actividad">
-        <Clock size={12} /> {timeAgo(stats.updatedAt)}
+      <span className="inline-flex items-center gap-1" title={t.project.lastActivity}>
+        <Clock size={12} /> {timeAgo(stats.updatedAt, t)}
       </span>
     </div>
   );
 }
 
 function PrivateRepoModal({ project, onClose }) {
+  const { t } = useLanguage();
   useEffect(() => {
     function handleKeyDown(event) {
       if (event.key === "Escape") onClose();
@@ -113,22 +115,21 @@ function PrivateRepoModal({ project, onClose }) {
           <div className="flex items-center gap-3">
             <Lock className="text-accent-2" size={20} aria-hidden="true" />
             <h2 id="private-repo-title" className="font-mono text-lg font-semibold text-text">
-              Repositorio privado
+              {t.project.privateRepository}
             </h2>
           </div>
           <button
             type="button"
             onClick={onClose}
             className="text-text-muted transition-colors hover:text-accent"
-            aria-label="Cerrar modal"
-            title="Cerrar"
+            aria-label={t.accessibility.closeModal}
+            title={t.accessibility.closeModal}
           >
             <X size={18} aria-hidden="true" />
           </button>
         </div>
         <p className="mt-4 leading-relaxed text-text-muted">
-          No se puede acceder al repositorio de {project.title} porque es privado,
-          pero puedes visitar su sitio oficial.
+          {t.project.privateDescription(project.title)}
         </p>
         <div className="mt-6 flex flex-wrap justify-end gap-3">
           <button
@@ -136,7 +137,7 @@ function PrivateRepoModal({ project, onClose }) {
             onClick={onClose}
             className="rounded-lg border border-border px-4 py-2 font-mono text-sm text-text-muted transition-colors hover:border-accent hover:text-accent"
           >
-            cerrar
+            {t.project.close}
           </button>
           <a
             href={project.official}
@@ -145,7 +146,7 @@ function PrivateRepoModal({ project, onClose }) {
             onClick={onClose}
             className="inline-flex items-center gap-1.5 rounded-lg bg-accent px-4 py-2 font-mono text-sm font-semibold text-bg transition-shadow hover:shadow-[0_0_18px_rgba(57,255,106,0.45)]"
           >
-            <ExternalLink size={15} aria-hidden="true" /> sitio oficial
+            <ExternalLink size={15} aria-hidden="true" /> {t.project.officialSite}
           </a>
         </div>
       </div>
@@ -154,13 +155,14 @@ function PrivateRepoModal({ project, onClose }) {
 }
 
 export default function Projects() {
+  const { projects, t } = useLanguage();
   const [privateProject, setPrivateProject] = useState(null);
 
   return (
     <>
       <section id="proyectos" className="py-20 px-6">
       <div className="max-w-3xl mx-auto">
-        <p className="font-mono text-sm text-accent mb-3">// proyectos</p>
+        <p className="font-mono text-sm text-accent mb-3">// {t.projects}</p>
         <div className="grid gap-5">
           {projects.map((p, i) => (
             <motion.div
@@ -202,7 +204,7 @@ export default function Projects() {
                       onClick={() => setPrivateProject(p)}
                       className="inline-flex items-center gap-1.5 text-sm font-mono text-text-muted transition-colors hover:text-accent"
                     >
-                      <GithubIcon size={15} /> repo
+                      <GithubIcon size={15} /> {t.project.repository}
                     </button>
                   ) : (
                     <a
@@ -211,16 +213,16 @@ export default function Projects() {
                       rel="noreferrer"
                       className="inline-flex items-center gap-1.5 text-sm font-mono text-text-muted transition-colors hover:text-accent"
                     >
-                      <GithubIcon size={15} /> repo
+                      <GithubIcon size={15} /> {t.project.repository}
                     </a>
                   )}
                   {p.private && (
                     <span
                       className="inline-flex items-center gap-1.5 text-sm font-mono text-accent-2"
-                      title="Repositorio privado"
-                      aria-label="Repositorio privado"
+                      title={t.project.privateRepository}
+                      aria-label={t.project.privateRepository}
                     >
-                      <Lock size={15} aria-hidden="true" /> repositorio privado
+                      <Lock size={15} aria-hidden="true" /> {t.project.private}
                     </span>
                   )}
                   {p.demo && (
@@ -230,7 +232,7 @@ export default function Projects() {
                       rel="noreferrer"
                       className="inline-flex items-center gap-1.5 text-sm font-mono text-text-muted hover:text-accent transition-colors"
                     >
-                      <ExternalLink size={15} /> demo
+                      <ExternalLink size={15} /> {t.project.demo}
                     </a>
                   )}
                   {p.official && (
@@ -240,7 +242,7 @@ export default function Projects() {
                       rel="noreferrer"
                       className="inline-flex items-center gap-1.5 text-sm font-mono text-text-muted hover:text-accent transition-colors"
                     >
-                      <ExternalLink size={15} /> sitio oficial
+                      <ExternalLink size={15} /> {t.project.officialSite}
                     </a>
                   )}
                 </div>

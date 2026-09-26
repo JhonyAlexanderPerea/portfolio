@@ -1,21 +1,23 @@
-import { useEffect, useRef, useState } from "react";
-import { profile } from "../data/profile";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { Languages } from "lucide-react";
+import { useLanguage } from "../i18n";
 
-const NAV = [
-  { href: "#sobre-mi", label: "sobre-mi", id: "sobre-mi" },
-  { href: "#skills", label: "skills", id: "skills" },
-  { href: "#proyectos", label: "proyectos", id: "proyectos" },
-  { href: "#contacto", label: "contacto", id: "contacto" },
-];
+const NAV_IDS = ["sobre-mi", "skills", "proyectos", "contacto"];
 
 export default function Nav() {
+  const { language, setLanguage, profile, t } = useLanguage();
+  const nav = useMemo(() => NAV_IDS.map((id, index) => ({
+    href: `#${id}`,
+    label: Object.values(t.nav)[index],
+    id,
+  })), [t.nav]);
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
   const navigationTarget = useRef(null);
 
   useEffect(() => {
-    const sections = NAV.map((item) => document.getElementById(item.id)).filter(Boolean);
+    const sections = nav.map((item) => document.getElementById(item.id)).filter(Boolean);
 
     const updateActiveSection = () => {
       const marker = Math.min(window.innerHeight * 0.38, 260);
@@ -75,7 +77,7 @@ export default function Nav() {
       window.removeEventListener("wheel", cancelNavigation);
       window.removeEventListener("touchstart", cancelNavigation);
     };
-  }, []);
+  }, [nav]);
 
   function handleNavigation(event, id) {
     event.preventDefault();
@@ -106,7 +108,7 @@ export default function Nav() {
           type="button"
           aria-expanded={menuOpen}
           aria-controls="site-navigation"
-          aria-label={menuOpen ? "Cerrar menu" : "Abrir menu"}
+          aria-label={menuOpen ? t.accessibility.closeMenu : t.accessibility.openMenu}
           onClick={() => setMenuOpen((open) => !open)}
           className="sm:hidden inline-flex h-10 w-10 items-center justify-center rounded-md border border-border text-text-muted transition-colors hover:border-accent hover:text-accent"
         >
@@ -116,7 +118,7 @@ export default function Nav() {
           id="site-navigation"
           className={`${menuOpen ? "flex" : "hidden"} absolute left-4 right-4 top-[4.5rem] flex-col gap-1 rounded-lg border border-border bg-surface/95 p-3 text-text-muted shadow-xl backdrop-blur sm:static sm:flex sm:flex-row sm:items-center sm:gap-7 sm:border-0 sm:bg-transparent sm:p-0 sm:shadow-none sm:backdrop-blur-none`}
         >
-          {NAV.map((item) => (
+          {nav.map((item) => (
             <li key={item.href} className="relative py-1">
               <a
                 href={item.href}
@@ -133,6 +135,16 @@ export default function Nav() {
             </li>
           ))}
         </ul>
+        <button
+          type="button"
+          onClick={() => setLanguage(language === "es" ? "en" : "es")}
+          className="ml-3 inline-flex items-center gap-1.5 rounded-md border border-border px-2.5 py-1.5 text-xs text-text-muted transition-colors hover:border-accent hover:text-accent"
+          aria-label={t.switchLanguage}
+          title={t.switchLanguage}
+        >
+          <Languages size={14} aria-hidden="true" />
+          <span>{language.toUpperCase()}</span>
+        </button>
       </nav>
     </header>
   );

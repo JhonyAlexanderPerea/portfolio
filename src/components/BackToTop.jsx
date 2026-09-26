@@ -1,8 +1,10 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { ArrowUp } from "lucide-react";
+import { useLanguage } from "../i18n";
 
 export default function BackToTop() {
+  const { t } = useLanguage();
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -21,7 +23,7 @@ export default function BackToTop() {
           whileHover={{ scale: 1.08 }}
           whileTap={{ scale: 0.94 }}
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          aria-label="Volver arriba"
+          aria-label={t.accessibility.backToTop}
           className="fixed back-to-top z-40 w-11 h-11 rounded-full border border-border bg-surface/90 backdrop-blur text-accent flex items-center justify-center shadow-[0_0_20px_-4px_rgba(57,255,106,0.4)] hover:border-accent transition-colors"
         >
           <ArrowUp size={18} />

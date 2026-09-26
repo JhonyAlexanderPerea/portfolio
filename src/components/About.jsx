@@ -1,7 +1,9 @@
 import { motion } from "framer-motion";
-import { profile } from "../data/profile";
+import { useLanguage } from "../i18n";
 
 export default function About() {
+  const { profile, t } = useLanguage();
+
   return (
     <section id="sobre-mi" className="py-28 px-6">
       <div className="max-w-3xl mx-auto">
@@ -12,7 +14,7 @@ export default function About() {
           transition={{ duration: 0.5 }}
           className="font-mono text-sm text-accent mb-3"
         >
-          // sobre-mi
+          // {t.about}
         </motion.p>
         <motion.div
           initial={{ opacity: 0, y: 12 }}

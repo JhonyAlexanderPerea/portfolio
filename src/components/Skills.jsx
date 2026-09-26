@@ -1,66 +1,82 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import {
-  Braces,
-  CheckCircle2,
   Coffee,
   Code2,
-  Container,
-  Database,
-  GitBranch,
-  Globe,
-  Languages,
-  Layers3,
-  LockKeyhole,
-  MessageCircle,
-  Network,
   Server,
-  ShieldCheck,
+  Smartphone,
+  Globe2,
+  Palette,
+  FileCode2,
+  Layout,
+  Layers,
+  Database,
+  Container,
+  Flame,
+  Network,
+  Webhook,
+  GitBranch,
   Terminal,
-  Users,
+  ShieldCheck,
+  Router,
+  Cpu,
+  Lock,
+  Kanban,
+  Languages,
+  Users2,
+  Puzzle,
+  MessageSquare,
 } from "lucide-react";
-import { skillGroups } from "../data/profile";
+import { useLanguage } from "../i18n";
 import { GithubIcon } from "./icons";
 import SpotlightCard from "./SpotlightCard";
 
 const SKILL_ICONS = {
+  // Lenguajes
   Java: Coffee,
   Python: Code2,
   "Spring Boot": Server,
-  "Kotlin (aprendiendo)": Braces,
-  HTML5: Globe,
-  CSS3: Layers3,
-  "TypeScript (aprendiendo)": Braces,
-  "Angular (aprendiendo)": Code2,
-  "Jetpack Compose (aprendiendo)": Layers3,
-  "Material 3 Design (aprendiendo)": Layers3,
+  "Kotlin (aprendiendo)": Smartphone, 
+  HTML5: Globe2,
+  CSS3: Palette, 
+  "TypeScript (aprendiendo)": FileCode2, 
+  "Angular (aprendiendo)": Layout,
+  "Jetpack Compose (aprendiendo)": Layers,
+  "Material 3 Design (aprendiendo)": Palette,
+
+  // Datos e Infraestructura
   MongoDB: Database,
   Docker: Container,
-  Firebase: Server,
+  Firebase: Flame, 
   Microservicios: Network,
-  "Rest APIs": Globe,
+  "Rest APIs": Webhook,
   SQL: Database,
+
+  
   Git: GitBranch,
   GitHub: GithubIcon,
   Linux: Terminal,
   Ciberseguridad: ShieldCheck,
-  Redes: Network,
-  Infraestructura: Server,
-  "Seguridad Informática": LockKeyhole,
-  "Metodologías ágiles": CheckCircle2,
+  Redes: Router, 
+  Infraestructura: Cpu, 
+  "Seguridad Informática": Lock,
+
+  // Habilidades Blandas y Metodologías
+  "Metodologías ágiles": Kanban, 
   "Inglés B1": Languages,
-  "Trabajo en equipo": Users,
-  "Resolución de problemas": Code2,
-  "Comunicación efectiva": MessageCircle,
+  "Trabajo en equipo": Users2,
+  "Resolución de problemas": Puzzle,
+  "Comunicación efectiva": MessageSquare,
 };
 
 export default function Skills() {
+  const { skillGroups, t } = useLanguage();
   const [selectedGroup, setSelectedGroup] = useState(0);
 
   return (
     <section id="skills" className="py-20 px-6">
       <div className="max-w-3xl mx-auto">
-        <p className="font-mono text-sm text-accent mb-3">// skills</p>
+        <p className="font-mono text-sm text-accent mb-3">// {t.skills}</p>
         <div className="grid sm:grid-cols-2 gap-4">
           {skillGroups.map((group, gi) => (
             <motion.div
@@ -95,7 +111,7 @@ export default function Skills() {
                 </div>
                 <motion.div layout className="flex flex-wrap gap-2 mt-3">
                   {group.items.map((item, itemIndex) => {
-                    const Icon = SKILL_ICONS[item] || Code2;
+                    const Icon = SKILL_ICONS[group.itemKeys[itemIndex]] || Code2;
                     return (
                       <motion.span
                         key={item}

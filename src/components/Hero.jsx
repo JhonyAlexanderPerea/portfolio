@@ -1,37 +1,21 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { profile, links, skillGroups, projects } from "../data/profile";
+import { links } from "../data/profile";
+import { useLanguage } from "../i18n";
 import Avatar from "./Avatar";
-
-const INTRO_LINES = [
-  { cmd: "whoami", out: [`${profile.name}`, `> ${profile.role}`] },
-  { cmd: "cat about.txt", out: [profile.bio] },
-  { cmd: "echo $STATUS", out: [profile.status] },
-];
-
-const HELP_TEXT = [
-  "comandos disponibles:",
-  "  about       — sobre mi",
-  "  skills      — stack tecnico",
-  "  projects    — proyectos destacados",
-  "  contact     — como contactarme",
-  "  github      — abrir mi github",
-  "  clear       — limpiar terminal",
-  "  help        — ver esta ayuda",
-];
 
 function scrollToId(id) {
   document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 }
 
-function runCommand(raw) {
+function runCommand(raw, { profile, skillGroups, projects, t }) {
   const cmd = raw.trim().toLowerCase();
   switch (cmd) {
     case "":
       return { out: [] };
     case "help":
     case "?":
-      return { out: HELP_TEXT };
+      return { out: t.hero.help };
     case "about":
     case "whoami":
       scrollToId("sobre-mi");
@@ -50,16 +34,16 @@ function runCommand(raw) {
       return { out: [`email: ${links.email}`, `github: ${links.github}`, `linkedin: ${links.linkedin}`] };
     case "github":
       window.open(links.github, "_blank", "noreferrer");
-      return { out: ["abriendo github..."] };
+      return { out: [t.hero.opening("github")] };
     case "linkedin":
       window.open(links.linkedin, "_blank", "noreferrer");
-      return { out: ["abriendo linkedin..."] };
+      return { out: [t.hero.opening("linkedin")] };
     case "sudo":
-      return { out: ["nice try. permission denied."] };
+      return { out: [t.hero.permissionDenied] };
     case "clear":
       return { clear: true };
     default:
-      return { out: [`comando no encontrado: ${cmd}`, `escribe "help" para ver los comandos disponibles`] };
+      return { out: [t.hero.commandNotFound(cmd), t.hero.helpHint] };
   }
 }
 
@@ -96,13 +80,19 @@ function useTypewriter(lines, speed = 18, lineDelay = 300) {
       cancelled = true;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [lines, speed, lineDelay]);
 
   return { rendered, done };
 }
 
 export default function Hero() {
-  const { rendered: introRendered, done: introDone } = useTypewriter(INTRO_LINES);
+  const { profile, skillGroups, projects, t } = useLanguage();
+  const introLines = useMemo(() => [
+    { cmd: "whoami", out: [`${profile.name}`, `> ${profile.role}`] },
+    { cmd: "cat about.txt", out: [profile.bio] },
+    { cmd: "echo $STATUS", out: [profile.status] },
+  ], [profile]);
+  const { rendered: introRendered, done: introDone } = useTypewriter(introLines);
   const [history, setHistory] = useState([]); // {cmd, out}
   const [input, setInput] = useState("");
   const [historyIdx, setHistoryIdx] = useState(null);
@@ -119,7 +109,7 @@ export default function Hero() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    const result = runCommand(input);
+    const result = runCommand(input, { profile, skillGroups, projects, t });
     if (result.clear) {
       setHistory([]);
     } else {
@@ -228,7 +218,7 @@ export default function Hero() {
                   autoFocus
                   spellCheck={false}
                   autoComplete="off"
-                  placeholder="escribe 'help'…"
+                  placeholder={t.hero.terminalPlaceholder}
                   className="min-w-0 flex-1 bg-transparent outline-none text-text placeholder:text-text-muted/50 font-mono"
                 />
               </form>
@@ -246,18 +236,18 @@ export default function Hero() {
             href="#proyectos"
             className="px-5 py-2.5 rounded-lg bg-accent text-bg font-mono text-sm font-semibold hover:shadow-[0_0_20px_rgba(57,255,106,0.5)] transition-shadow"
           >
-            ./ver-proyectos
+            {t.hero.viewProjects}
           </a>
           <a
             href="#contacto"
             className="px-5 py-2.5 rounded-lg border border-border text-text font-mono text-sm hover:border-accent hover:text-accent transition-colors"
           >
-            ./contactar
+            {t.hero.contact}
           </a>
         </motion.div>
 
         <p className="mt-4 text-[11px] font-mono text-text-muted/50 text-center">
-          tip: la terminal es interactiva — escribe <span className="text-accent-2">help</span> para explorar
+          {t.hero.terminalTip} <span className="text-accent-2">help</span> {t.language === "es" ? "para explorar" : "to explore"}
         </p>
       </motion.div>
     </section>

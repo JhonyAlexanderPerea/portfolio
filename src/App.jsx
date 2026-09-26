@@ -6,8 +6,11 @@ import Projects from "./components/Projects";
 import Contact from "./components/Contact";
 import ScrollProgress from "./components/ScrollProgress";
 import BackToTop from "./components/BackToTop";
+import { useLanguage } from "./i18n";
 
 export default function App() {
+  const { t } = useLanguage();
+
   return (
     <div className="site-shell min-h-screen text-text">
       <div className="ambient-background" aria-hidden="true" />
@@ -22,7 +25,7 @@ export default function App() {
       </main>
       <BackToTop />
       <footer className="py-8 text-center text-xs font-mono text-text-muted/60 border-t border-border">
-        construido con React + Tailwind + FramerMotion — {new Date().getFullYear()}
+        {t.footer} — {new Date().getFullYear()}
       </footer>
     </div>
   );
