@@ -24,7 +24,7 @@ export const skillGroups = [
   },
   {
     label: "frontend",
-    items: ["HTML5", "CSS3", "TypeScript (aprendiendo)", "Angular (aprendiendo)","Jetpack Compose (aprendiendo)", "Material 3 Design (aprendiendo)"],
+    items: ["HTML5", "CSS3", "TypeScript (aprendiendo)","React", "Angular (aprendiendo)","Jetpack Compose (aprendiendo)", "Material 3 Design (aprendiendo)"],
   },
   {
     label: "datos_e_infra",

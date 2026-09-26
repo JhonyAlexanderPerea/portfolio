@@ -39,6 +39,7 @@ const SKILL_ICONS = {
   "Kotlin (aprendiendo)": Smartphone, 
   HTML5: Globe2,
   CSS3: Palette, 
+  React: FileCode2,
   "TypeScript (aprendiendo)": FileCode2, 
   "Angular (aprendiendo)": Layout,
   "Jetpack Compose (aprendiendo)": Layers,
