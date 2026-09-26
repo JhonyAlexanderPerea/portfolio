@@ -41,7 +41,7 @@ body {
   background: transparent;
 }
 
-.site-shell > :not(.ambient-background):not(.fixed) {
+.site-shell > :not(.ambient-background):not(.fixed):not(.scroll-progress) {
   position: relative;
   z-index: 1;
 }
