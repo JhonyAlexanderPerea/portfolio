@@ -42,17 +42,7 @@ export const skillGroups = [
 
 
 export const projects = [
-    {
-    id: "viaje-app",
-    title: "El Viaje a la Cámara Interna — App",
-    description: "Aplicación web híbrida y PWA para acompañar durante 9 meses El Viaje a la Cámara Interna con diario E.P.A.R., notas libres, biblioteca de recursos con carga real de archivos y seguimiento de 22 sesiones.",
-    stack: ["React con Next.js", "Supabase", "Tailwind CSS"],
-    repo: "https://github.com/JhonyAlexanderPerea/viaje-app.git",
-    private: true,
-    demo: "",
-    official: "https://viaje-app-phi.vercel.app",
-    },
-    {
+  {
     id: "corteza-terrestre",
     title: "Corteza Terrestre",
     description: "Rediseño y mejoramiento de la páǵina web de la fundación Corteza Terrestre, con el objetivo de mejorar la experiencia del usuario y la accesibilidad de la información.",
@@ -63,10 +53,29 @@ export const projects = [
     official: "https://www.cortezaterrestre.org/",
   },
   {
+    id: "viaje-app",
+    title: "El Viaje a la Cámara Interna — App",
+    description: "Aplicación web híbrida y PWA para acompañar durante 9 meses El Viaje a la Cámara Interna con diario E.P.A.R., notas libres, biblioteca de recursos con carga real de archivos y seguimiento de 22 sesiones.",
+    stack: ["React con Next.js", "Supabase", "Tailwind CSS"],
+    repo: "https://github.com/JhonyAlexanderPerea/viaje-app.git",
+    private: true,
+    demo: "",
+    official: "https://viaje-app-phi.vercel.app",
+  },
+  {
+    id: "stepup-ecommerce",
+    title: "StepUp Ecommerce (Proyecto académico)",
+    description: "Tienda de ropa en línea, con funcionalidades de catálogo interactivo, carrito de compras ",
+    stack: ["React", "TypeScript", "Tailwind CSS", "Vite"],
+    repo: "https://github.com/Shuh3n/StepUp_ecommerce",
+    demo: "https://stepupstore.vercel.app/",
+    official: "",
+  },
+  {
     id: "elasticity-manager",
     title: "elasticity-manager (Proyecto académico)",
     description: "Plataforma para la gestión de la elasticidad de recursos en entornos de nube, optimizando el rendimiento y la eficiencia de los sistemas. Construida con Go, ",
-    stack: ["Go"],
+    stack: ["Go","Bash"],
     repo: "https://github.com/JhonyAlexanderPerea/elasticity-manager",
     private: false,
     demo: "",
@@ -76,18 +85,9 @@ export const projects = [
     id: "proyectoTLF",
     title: "proyectoTLF (Proyecto académico)",
     description: "Búsqueda y validación de patrones en textos y sistemas interactivos",
-    stack: ["Python"],
+    stack: ["Python","HTML","CSS","JavaScript"],
     repo: "https://github.com/JhonyAlexanderPerea/proyectoTLF",
     demo: "",
-    official: "",
-  },
-  {
-    id: "stepup-ecommerce",
-    title: "StepUp Ecommerce (Proyecto académico)",
-    description: "Tienda de ropa en línea, con funcionalidades de catálogo interactivo, carrito de compras ",
-    stack: ["React", "TypeScript", "Tailwind CSS", "Vite"],
-    repo: "https://github.com/Shuh3n/StepUp_ecommerce",
-    demo: "https://stepupstore.vercel.app/",
     official: "",
   }
 
