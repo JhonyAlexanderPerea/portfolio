@@ -174,9 +174,9 @@ export default function Projects() {
                 as="article"
                 className="rounded-xl border border-border bg-surface p-6 transition-colors hover:border-accent/60"
               >
-                <div className="flex items-start justify-between gap-4">
+                <div className="flex min-w-0 items-start justify-between gap-4">
                   <div className="w-full">
-                    <h3 className="font-mono text-lg font-semibold text-text">
+                    <h3 className="break-words font-mono text-lg font-semibold text-text">
                       {p.title}
                     </h3>
                     <p className="text-text-muted mt-2 leading-relaxed">
@@ -195,7 +195,7 @@ export default function Projects() {
                     <GithubStats repo={p.repo} />
                   </div>
                 </div>
-                <div className="flex gap-4 mt-5">
+                <div className="mt-5 flex flex-wrap gap-x-4 gap-y-3">
                   {p.private && p.official ? (
                     <button
                       type="button"

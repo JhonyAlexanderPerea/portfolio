@@ -152,7 +152,7 @@ export default function Hero() {
   }
 
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center px-6 overflow-hidden">
+    <section className="relative min-h-screen flex flex-col items-center justify-center px-4 py-24 sm:px-6 sm:py-20 overflow-hidden">
       {/* floating gradient orbs for depth */}
       <motion.div
         aria-hidden
@@ -185,31 +185,31 @@ export default function Hero() {
           onClick={() => inputRef.current?.focus()}
           className="w-full rounded-xl border border-border bg-surface/90 backdrop-blur shadow-[0_0_60px_-15px_rgba(57,255,106,0.25)] cursor-text"
         >
-          <div className="flex items-center gap-2 px-4 py-3 border-b border-border">
+          <div className="flex items-center gap-2 px-3 py-3 sm:px-4 border-b border-border">
             <span className="w-3 h-3 rounded-full bg-[#FF5F56]" />
             <span className="w-3 h-3 rounded-full bg-[#FFBD2E]" />
             <span className="w-3 h-3 rounded-full bg-[#27C93F]" />
-            <span className="ml-3 text-xs text-text-muted font-mono">
+            <span className="ml-2 sm:ml-3 truncate text-xs text-text-muted font-mono">
               jhony@portfolio: ~
             </span>
           </div>
 
           <div
             ref={scrollRef}
-            className="px-5 py-6 font-mono text-sm sm:text-base leading-relaxed h-[320px] sm:h-[360px] overflow-y-auto"
+            className="px-3 py-5 sm:px-5 sm:py-6 font-mono text-xs sm:text-base leading-relaxed h-[300px] sm:h-[360px] overflow-y-auto break-words"
           >
             {lines.map((line, i) => (
               <div key={i} className="mb-4">
                 <div className="flex gap-2">
                   <span className="text-accent">➜</span>
                   <span className="text-accent-2">~</span>
-                  <span className="text-text">{line.cmd}</span>
+                  <span className="min-w-0 break-all text-text">{line.cmd}</span>
                   {!introDone && i === lines.length - 1 && (
                     <span className="inline-block w-2 h-4 bg-accent animate-pulse ml-0.5" />
                   )}
                 </div>
                 {line.out.map((o, j) => (
-                  <p key={j} className="text-text-muted mt-1 pl-5 whitespace-pre-wrap">
+                  <p key={j} className="text-text-muted mt-1 pl-5 whitespace-pre-wrap break-words">
                     {o}
                   </p>
                 ))}
@@ -229,7 +229,7 @@ export default function Hero() {
                   spellCheck={false}
                   autoComplete="off"
                   placeholder="escribe 'help'…"
-                  className="flex-1 bg-transparent outline-none text-text placeholder:text-text-muted/50 font-mono"
+                  className="min-w-0 flex-1 bg-transparent outline-none text-text placeholder:text-text-muted/50 font-mono"
                 />
               </form>
             )}

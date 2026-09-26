@@ -11,6 +11,7 @@ const NAV = [
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState("");
+  const [menuOpen, setMenuOpen] = useState(false);
   const navigationTarget = useRef(null);
 
   useEffect(() => {
@@ -83,6 +84,7 @@ export default function Nav() {
 
     navigationTarget.current = id;
     setActive(id);
+    setMenuOpen(false);
     window.scrollTo({
       top: Math.max(section.offsetTop - 80, 0),
       behavior: "smooth",
@@ -95,12 +97,25 @@ export default function Nav() {
         scrolled ? "bg-bg/80 backdrop-blur border-b border-border" : ""
       }`}
     >
-      <nav className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between font-mono text-sm">
+      <nav className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between font-mono text-sm">
         <a href="#" className="text-text font-semibold tracking-tight">
           <span className="text-accent">~/</span>
           {profile.handle.toLowerCase()}
         </a>
-        <ul className="hidden sm:flex items-center gap-7 text-text-muted">
+        <button
+          type="button"
+          aria-expanded={menuOpen}
+          aria-controls="site-navigation"
+          aria-label={menuOpen ? "Cerrar menu" : "Abrir menu"}
+          onClick={() => setMenuOpen((open) => !open)}
+          className="sm:hidden inline-flex h-10 w-10 items-center justify-center rounded-md border border-border text-text-muted transition-colors hover:border-accent hover:text-accent"
+        >
+          <span aria-hidden="true" className="text-lg leading-none">{menuOpen ? "x" : "="}</span>
+        </button>
+        <ul
+          id="site-navigation"
+          className={`${menuOpen ? "flex" : "hidden"} absolute left-4 right-4 top-[4.5rem] flex-col gap-1 rounded-lg border border-border bg-surface/95 p-3 text-text-muted shadow-xl backdrop-blur sm:static sm:flex sm:flex-row sm:items-center sm:gap-7 sm:border-0 sm:bg-transparent sm:p-0 sm:shadow-none sm:backdrop-blur-none`}
+        >
           {NAV.map((item) => (
             <li key={item.href} className="relative py-1">
               <a
